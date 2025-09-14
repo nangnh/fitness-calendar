@@ -77,6 +77,8 @@ yarn start
 
 Create a `.env.local` file in the root directory and add any required environment variables. Refer to `.env.example` if available.
 
+## Contributing
+* Design: https://www.figma.com/design/fMnZaKJoQuZEGHjkhC1djs/Everfit-Test---Nhan-Huynh?node-id=1-323&t=Tu2jz5CgaNzyqH98-0
 ---
 
 Feel free to contribute or open issues for suggestions and bug reports!
