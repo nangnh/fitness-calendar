@@ -4,6 +4,8 @@ import { useDrop } from "react-dnd"
 import { WorkoutCard } from "./workout-card"
 import type { WorkoutData } from "@/types/fitness"
 import { cn } from "@/lib/utils"
+import { useRef } from "react"
+import PlusIcon from "./icons/plus-icon"
 
 interface DayColumnProps {
   day: string
@@ -16,7 +18,10 @@ interface DayColumnProps {
 }
 
 export function DayColumn({ day, date, isToday, workouts, dayIndex, onMoveWorkout, onMoveExercise }: DayColumnProps) {
-  const [{ isOver }, drop] = useDrop({
+  const ref = useRef<HTMLDivElement>(null)
+  const showPlusIcon = ["TUE", "THU"].includes(day)
+
+  const [_, drop] = useDrop({
     accept: "workout",
     drop: (item: { id: string; fromDay: number }, monitor) => {
       if (!monitor.didDrop()) {
@@ -28,22 +33,23 @@ export function DayColumn({ day, date, isToday, workouts, dayIndex, onMoveWorkou
     }),
   })
 
+  drop(ref)
+
   return (
     <div
-      ref={drop}
-      className={cn(
-        "min-h-[600px] bg-white rounded-lg border border-gray-200 p-3",
-        isOver && "bg-blue-50 border-blue-300",
-      )}
+      ref={ref}
+      className={cn("w-fit h-full")}
     >
-      <div className="text-center mb-4">
-        <div className="text-sm font-medium text-gray-600 mb-1">{day}</div>
-        <div className={cn("text-lg font-semibold", isToday ? "text-purple-600 font-bold" : "text-gray-800")}>
-          {date.toString().padStart(2, "0")}
-        </div>
+      <div className="text-left mb-2">
+        <div className="text-[10px] font-semibold text-[#6A7988] mb-1">{day}</div>
       </div>
-
-      <div className="space-y-3">
+      <div className="space-y-[5px] min-h-[760px] w-[180px] p-[10px] bg-[#F3F5F8] rounded-[6px]">
+        <div className="flex items-center justify-between">
+          <div className={cn("text-[11px]", isToday ? "text-[#5A57CB] font-bold" : "text-[#728096] font-semibold")}>
+            {date.toString().padStart(2, "0")}
+          </div>
+          {showPlusIcon && <PlusIcon />}
+        </div>
         {workouts.map((workout, index) => (
           <WorkoutCard
             key={workout.id}

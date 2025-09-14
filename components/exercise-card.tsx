@@ -3,6 +3,7 @@
 import { useDrag } from "react-dnd"
 import type { ExerciseData } from "@/types/fitness"
 import { cn } from "@/lib/utils"
+import { useRef } from "react"
 
 interface ExerciseCardProps {
   exercise: ExerciseData
@@ -12,6 +13,8 @@ interface ExerciseCardProps {
 }
 
 export function ExerciseCard({ exercise, workoutId }: ExerciseCardProps) {
+  const ref = useRef<HTMLDivElement>(null)
+
   const [{ isDragging }, drag] = useDrag({
     type: "exercise",
     item: { id: exercise.id, fromWorkoutId: workoutId },
@@ -20,21 +23,23 @@ export function ExerciseCard({ exercise, workoutId }: ExerciseCardProps) {
     }),
   })
 
+  drag(ref)
+
   return (
     <div
-      ref={drag}
+      ref={ref}
       className={cn(
-        "bg-white rounded-md border border-gray-200 p-2 cursor-move transition-all",
+        "bg-white rounded-[3px] border border-gray-200 px-2 py-1 cursor-move transition-all",
         isDragging && "opacity-50 rotate-1",
       )}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1 min-w-0">
-          <h4 className="text-sm font-medium text-gray-900 mb-1">{exercise.name}</h4>
-          <p className="text-xs text-gray-500">{exercise.sets}</p>
+      <div className="w-full flex flex-col items-start justify-between">
+        <div className="w-full flex-1">
+          <h4 className="w-full text-[13px] font-semibold text-gray-900 line-clamp-1 text-right">{exercise.name}</h4>
         </div>
-        <div className="ml-2 flex-shrink-0">
-          <span className="text-xs font-medium text-gray-600">{exercise.setCount}x</span>
+        <div className="w-full flex flex-row justify-between">
+          <span className="flex-none text-[10px] font-bold text-[#95A6B7]">{exercise.setCount}x</span>
+          <p className="flex-1 w-full text-[10px] text-[#95A6B7] line-clamp-1 text-right">{exercise.sets}</p>
         </div>
       </div>
     </div>

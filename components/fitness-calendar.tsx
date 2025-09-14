@@ -150,21 +150,19 @@ export function FitnessCalendar() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="w-full">
-        <div className="grid grid-cols-7 gap-4">
-          {DAYS.map((day, index) => (
-            <DayColumn
-              key={day}
-              day={day}
-              date={weekDates[index]}
-              isToday={index === todayIndex}
-              workouts={workouts[index] || []}
-              dayIndex={index}
-              onMoveWorkout={moveWorkout}
-              onMoveExercise={moveExercise}
-            />
-          ))}
-        </div>
+      <div className="flex flex-row gap-2.5 w-full max-w-[1440px] min-w-7xl px-[60px] py-10 mx-auto overflow-x-auto overflow-y-auto transition-normal duration-200">
+        {DAYS.map((day, index) => (
+          <DayColumn
+            key={day}
+            day={day}
+            date={weekDates[index]}
+            isToday={index === todayIndex}
+            workouts={workouts[index] || []}
+            dayIndex={index}
+            onMoveWorkout={moveWorkout}
+            onMoveExercise={moveExercise}
+          />
+        ))}
       </div>
     </DndProvider>
   )
