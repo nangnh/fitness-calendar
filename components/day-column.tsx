@@ -21,7 +21,7 @@ export function DayColumn({ day, date, isToday, workouts, dayIndex, onMoveWorkou
   const ref = useRef<HTMLDivElement>(null)
   const showPlusIcon = ["TUE", "THU"].includes(day)
 
-  const [_, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: "workout",
     drop: (item: { id: string; fromDay: number }, monitor) => {
       if (!monitor.didDrop()) {
@@ -43,12 +43,12 @@ export function DayColumn({ day, date, isToday, workouts, dayIndex, onMoveWorkou
       <div className="text-left mb-2">
         <div className="text-[10px] font-semibold text-[#6A7988] mb-1">{day}</div>
       </div>
-      <div className="space-y-[5px] min-h-[760px] w-[180px] p-[10px] bg-[#F3F5F8] rounded-[6px]">
+      <div className={cn("space-y-[5px] min-h-[760px] w-[180px] p-[10px] bg-[#F3F5F8] rounded-[6px]", isOver ? "bg-purple-50" : "")}>
         <div className="flex items-center justify-between">
           <div className={cn("text-[11px]", isToday ? "text-[#5A57CB] font-bold" : "text-[#728096] font-semibold")}>
             {date.toString().padStart(2, "0")}
           </div>
-          {showPlusIcon && <PlusIcon />}
+          {showPlusIcon && <PlusIcon className="cursor-pointer"/>}
         </div>
         {workouts.map((workout, index) => (
           <WorkoutCard

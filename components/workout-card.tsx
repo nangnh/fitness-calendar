@@ -73,8 +73,8 @@ export function WorkoutCard({ workout, dayIndex, workoutIndex, onMoveWorkout, on
             onMoveExercise={onMoveExercise}
           />
         ))}
-        <div className="w-full flex justify-end cursor-pointer">
-          <PlusIcon />
+        <div className="w-full flex justify-end">
+          <PlusIcon className="cursor-pointer"/>
         </div>
       </div>
     </div>
